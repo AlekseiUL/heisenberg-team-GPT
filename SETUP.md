@@ -41,12 +41,13 @@ The wizard will:
 4. Install agents and skills to `~/.openclaw/agents/`
 5. Verify the installation
 
-After the wizard, initialize OpenClaw and start:
+After the wizard, create the workspace and start:
 
 ```bash
-openclaw init          # First time only — set LLM provider and API key
-openclaw gateway start # Start the system
-openclaw status        # Verify all 8 agents are active
+bash scripts/init-workspace.sh  # Create directories for all agents
+openclaw init                   # First time only — set LLM provider and API key
+openclaw gateway start          # Start the system
+openclaw status                 # Verify all 8 agents are active
 ```
 
 Send a message to your Telegram bot to test. See [docs/first-task.md](docs/first-task.md) for a walkthrough.
@@ -109,7 +110,6 @@ These placeholders appear in individual agent files and are optional:
 | `{{BOT_TEAMLEAD}}` | Walter bot username | team-constitution.md |
 | `{{BOT_HANK}}` | Hank bot username | hank/MEMORY.md |
 | `{{BOT_SKYLER}}` | Skyler bot username | team-constitution.md |
-| `{{BOT_MIKE}}` | Mike bot username (reserve) | team-constitution.md |
 | `{{TTS_VOICE_NAME}}` | Text-to-speech voice name | jesse/TOOLS.md |
 
 > 💡 The `setup-wizard.sh` handles the core placeholders automatically. These additional ones can be set manually as needed.

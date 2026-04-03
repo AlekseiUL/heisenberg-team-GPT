@@ -32,9 +32,6 @@
 | Хэнк Шрейдер | hank | Sonnet | Безопасность. Аудиты, патрули | Утечки, проверки, watchdog |
 | Гус Фринг | kaizen | Sonnet | Цели. Obsidian, привычки, стратсессии | Цели, прогресс, планы |
 | Братья Саламанка | researcher | Sonnet | Ресёрчер. Поиск, мониторинг, разведка | Найти информацию, конкуренты, тренды |
-| Майк Эрмантраут | {{BOT_MIKE}} | Claude Code (внешний) | Фиксер-резерв. Работает когда OpenClaw лежит | Критический сбой |
-
-> *Mike is a reserve agent slot — not included in the default template. Remove this row or configure as needed.*
 
 ---
 
@@ -281,7 +278,8 @@ message(action=send, channel=telegram, to={{OWNER_TELEGRAM_ID}}, message="Гот
 3. Продолжить
 
 ### OpenClaw упал:
-- Майк ({{BOT_MIKE}}) работает независимо
+- Перезапустить gateway: `openclaw gateway restart`
+- Проверить health: `bash scripts/self-heal.sh`
 
 ---
 

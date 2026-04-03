@@ -155,7 +155,6 @@ message(action=send, channel=telegram, to={{OWNER_TELEGRAM_ID}}, message="Гот
 - 💼 Сол — продюсер
 - 🎯 Гус — цели
 - 🔫 Хэнк — безопасность
-- 🔧 Майк — фиксер (Claude Code) *(reserve — not included in default template)*
 - 💰 **Я (Скайлер)** — финансы
 
 ## 📋 Team Board

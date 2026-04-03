@@ -24,7 +24,7 @@ sessions_send(sessionKey="agent:producer:main", message="Готово: [что �
 | Инструмент | Когда |
 |------------|-------|
 | methodologist SKILL.md | Структура MD/PDF |
-| nano-pdf SKILL.md | Генерация PDF |
+| minimax-pdf SKILL.md | Генерация PDF |
 | pdf-design-standard.md | Дизайн PDF |
 | copywriter SKILL.md + voice-dictionary | Стиль текстов |
 | coding tools / CLI agents | Use appropriate coding tools and CLI agents for development tasks. |

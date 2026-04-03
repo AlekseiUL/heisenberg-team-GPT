@@ -30,7 +30,7 @@ Team Lead. Техническое производство: код, скиллы
 |-------|-------|
 | methodologist | Инструкции, PDF, учебные материалы |
 | copywriter | Голос/стиль текста (voice-dictionary) |
-| nano-pdf | Генерация PDF |
+| minimax-pdf | Генерация PDF |
 | quality-check | ОТК перед сдачей |
 | skill-and-agent-creator | Создание/улучшение скиллов |
 

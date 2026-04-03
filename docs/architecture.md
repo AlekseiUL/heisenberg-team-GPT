@@ -94,14 +94,20 @@ Memory persists across sessions and compactions.
 
 ```
 agents/<name>/
-├── AGENTS.md      # Role and responsibilities
-├── SOUL.md        # Personality and tone
-├── IDENTITY.md    # Self-awareness and boundaries
-├── TOOLS.md       # Available tools and usage
-├── MEMORY.md      # Persistent knowledge
-├── BOOTSTRAP.md   # Recovery after restart
-└── HEARTBEAT.md   # Periodic tasks
+├── AGENTS.md      # WHAT the agent does — role, rules, workflows, error handling
+├── SOUL.md        # WHO the agent is — personality, tone, character traits
+├── IDENTITY.md    # Self-awareness — name, boundaries, limitations
+├── TOOLS.md       # HOW the agent works — session keys, commands, file paths
+├── MEMORY.md      # WHAT the agent knows — persistent facts, lessons, data
+├── BOOTSTRAP.md   # Recovery — what to do after restart or compaction
+└── HEARTBEAT.md   # Schedule — periodic tasks (empty = no scheduled tasks)
 ```
+
+**AGENTS.md vs TOOLS.md:**
+- `AGENTS.md` = instructions and logic (what to do, when, why)
+- `TOOLS.md` = reference card (session keys, file paths, commands, external tools)
+- If you need to change agent behavior → edit `AGENTS.md`
+- If you need to change connections or paths → edit `TOOLS.md`
 
 ## Security Model
 
