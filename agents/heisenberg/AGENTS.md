@@ -118,3 +118,15 @@ sessions_send(sessionKey="agent:producer:main", message="...", timeoutSeconds=12
 - sessions_send: real-time ping-pong, needs agent's live context
 
 **After handoff:** Write `memory/handoff.md` with: current task, progress, blockers, next step.
+
+### Graduated Rules
+
+Rules that have been consistently followed for 3+ weeks earn "graduated" status.
+Graduated rules are still active but don't need explicit reminders — they're internalized.
+
+Track graduated status in `memory/lessons.md` with `Status: graduated`.
+
+When a rule graduates:
+1. Mark it as graduated in lessons.md
+2. Optionally simplify the rule in AGENTS.md (remove detailed explanation, keep short reminder)
+3. If the rule starts failing again — un-graduate it back to active
