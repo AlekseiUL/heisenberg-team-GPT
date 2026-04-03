@@ -1,0 +1,58 @@
+name: Quality Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for PII leaks
+        run: |
+          if grep -rn "277478\|alekse\|ulian\|sprut_ai" . --include="*.md" --include="*.sh" --include="*.json" | grep -v ".gitignore" | grep -v "depersonalize"; then
+            echo "❌ PII leak detected!"
+            exit 1
+          fi
+          echo "✅ No PII leaks"
+
+      - name: Check for secrets
+        run: |
+          if grep -rn "sk-ant-api\|sk-proj-\|ghp_[a-zA-Z0-9]\{36\}\|ghu_" . --include="*.md" --include="*.sh" --include="*.json" | grep -v "grep\|example\|README\|SETUP\|faq"; then
+            echo "❌ Secret detected!"
+            exit 1
+          fi
+          echo "✅ No secrets"
+
+      - name: Validate bash scripts
+        run: |
+          ERRORS=0
+          for f in scripts/*.sh; do
+            if ! bash -n "$f" 2>/dev/null; then
+              echo "❌ Syntax error: $f"
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+          if [ "$ERRORS" -gt 0 ]; then exit 1; fi
+          echo "✅ All scripts valid"
+
+      - name: Check for broken internal links
+        run: |
+          BROKEN=0
+          grep -roh '\](docs/[^)]*)\|\](examples/[^)]*)' *.md docs/*.md 2>/dev/null | tr -d ']()' | sort -u | while read f; do
+            if [ ! -f "$f" ]; then
+              echo "❌ Broken link: $f"
+              BROKEN=$((BROKEN + 1))
+            fi
+          done
+          echo "✅ Link check complete"
+
+      - name: Check placeholders documented
+        run: |
+          echo "Undocumented placeholders:"
+          grep -roh '{{[A-Z_]*}}' . --include="*.md" --include="*.json" --include="*.sh" 2>/dev/null | sort -u
+          echo "✅ Placeholder scan complete"
