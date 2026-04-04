@@ -101,7 +101,8 @@ echo "  1) Anthropic (Claude) — recommended"
 echo "  2) OpenAI (GPT-4, GPT-4o)"
 echo "  3) Google (Gemini)"
 echo "  4) Ollama (local models)"
-echo "  5) Other / I'll configure manually"
+echo "  5) DeepSeek"
+echo "  6) Other / I'll configure manually"
 echo ""
 read -p "  Choose [1]: " LLM_CHOICE
 LLM_CHOICE="${LLM_CHOICE:-1}"
@@ -139,6 +140,13 @@ case "$LLM_CHOICE" in
     AGENT_MODEL="ollama/$OLLAMA_MODEL"
     ;;
   5)
+    LLM_PROVIDER="deepseek"
+    MAIN_MODEL="deepseek/deepseek-chat"
+    AGENT_MODEL="deepseek/deepseek-chat"
+    ask DEEPSEEK_API_KEY "DeepSeek API key (from platform.deepseek.com)" "" true
+    echo -e "  ${CYAN}Tip: deepseek-reasoner available for complex tasks${NC}"
+    ;;
+  6)
     LLM_PROVIDER="custom"
     ask MAIN_MODEL "Main model (provider/model format)" "anthropic/claude-opus-4-5" true
     AGENT_MODEL="$MAIN_MODEL"
@@ -212,6 +220,7 @@ declare -A REPLACEMENTS=(
   ["{{ANTHROPIC_API_KEY}}"]="${ANTHROPIC_API_KEY:-your-anthropic-key}"
   ["{{OPENAI_API_KEY}}"]="${OPENAI_API_KEY:-your-openai-key}"
   ["{{GOOGLE_API_KEY}}"]="${GOOGLE_API_KEY:-your-google-key}"
+  ["{{DEEPSEEK_API_KEY}}"]="${DEEPSEEK_API_KEY:-your-deepseek-key}"
 )
 
 # Count files to process

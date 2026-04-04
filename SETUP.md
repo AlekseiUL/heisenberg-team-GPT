@@ -16,6 +16,7 @@
 | Anthropic | claude-opus-4-5 | claude-sonnet-4-5 | Recommended. Best multi-agent coordination |
 | OpenAI | gpt-4o | gpt-4o | Full support |
 | Google | gemini-2.5-pro | gemini-2.5-flash | Full support |
+| DeepSeek | deepseek-chat | deepseek-chat | Budget-friendly. Good reasoning with deepseek-reasoner |
 | Ollama | llama3 (or custom) | same | Local, free. Limited tool-use capability |
 
 ### Claude Max Users
