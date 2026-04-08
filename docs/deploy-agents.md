@@ -117,6 +117,7 @@ Then **edit the generated config** and replace placeholders:
 | Placeholder | Replace with |
 |-------------|-------------|
 | `{{DISPLAY_NAME_HEISENBERG}}` etc. | The visible display name for that agent |
+| `{{INTERNAL_NAME_HEISENBERG}}` etc. | The internal OpenClaw agent name used for runtime routing |
 | `{{TELEGRAM_BOT_TOKEN_HEISENBERG}}` etc. | The Telegram bot token for that specific agent |
 | `{{OWNER_TELEGRAM_ID}}` | Your numeric Telegram ID (e.g. `123456789`) |
 | `{{ANTHROPIC_API_KEY}}` | Your Claude API key (`sk-ant-...`) |

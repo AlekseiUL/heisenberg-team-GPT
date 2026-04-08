@@ -26,6 +26,7 @@ This directory contains **committable example OpenClaw configuration files** for
    | Placeholder | What to put there |
    |-------------|------------------|
    | `{{DISPLAY_NAME_HEISENBERG}}` etc. | Visible display name for each built-in agent |
+   | `{{INTERNAL_NAME_HEISENBERG}}` etc. | Internal OpenClaw agent name used in session keys and `~/.openclaw/agents/` |
    | `{{TELEGRAM_BOT_TOKEN_HEISENBERG}}` etc. | Bot token for that specific agent |
    | `{{OWNER_TELEGRAM_ID}}` | Your numeric Telegram ID (get it from @userinfobot) |
    | `{{ANTHROPIC_API_KEY}}` | Claude API key (`sk-ant-...`) |
@@ -50,7 +51,7 @@ This directory contains **committable example OpenClaw configuration files** for
 | `gus.openclaw.json.example` | Gus Fring (Kaizen) | claude-sonnet-4-5 |
 | `twins.openclaw.json.example` | The Cousins (Research) | claude-sonnet-4-5 |
 
-The setup wizard fills per-agent display names and Telegram bot tokens into the generated copies automatically.
+The setup wizard fills per-agent display names, internal agent names, and Telegram bot tokens into the generated copies automatically.
 
 ## Design Notes
 

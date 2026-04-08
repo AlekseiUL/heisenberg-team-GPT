@@ -32,31 +32,31 @@
   "agents": {
     "remoteAgents": {
       "heisenberg": {
-        "sessionKey": "agent:main:main",
+        "sessionKey": "agent:{{INTERNAL_NAME_HEISENBERG}}:main",
         "description": "Boss — main user-facing agent, escalations"
       },
       "saul": {
-        "sessionKey": "agent:producer:main",
+        "sessionKey": "agent:{{INTERNAL_NAME_SAUL}}:main",
         "description": "Producer — coordinates content pipeline, ОТК, delivery"
       },
       "walter": {
-        "sessionKey": "agent:teamlead:main",
+        "sessionKey": "agent:{{INTERNAL_NAME_WALTER}}:main",
         "description": "Tech lead — code, files, complex technical tasks"
       },
       "jesse": {
-        "sessionKey": "agent:marketing-funnel:main",
+        "sessionKey": "agent:{{INTERNAL_NAME_JESSE}}:main",
         "description": "Marketing — funnels, CTR, analytics, copywriting"
       },
       "skyler": {
-        "sessionKey": "agent:skyler:main",
+        "sessionKey": "agent:{{INTERNAL_NAME_SKYLER}}:main",
         "description": "Finance — budgets, expenses, financial reports"
       },
       "hank": {
-        "sessionKey": "agent:hank:main",
+        "sessionKey": "agent:{{INTERNAL_NAME_HANK}}:main",
         "description": "Security — audits, monitoring, QA"
       },
       "twins": {
-        "sessionKey": "agent:researcher:main",
+        "sessionKey": "agent:{{INTERNAL_NAME_TWINS}}:main",
         "description": "Research — web search, monitoring, data gathering"
       }
     }

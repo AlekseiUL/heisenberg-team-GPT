@@ -229,8 +229,8 @@ for i in "${!SELECTED_AGENT_LIST[@]}"; do
   default_name="${DEFAULT_DISPLAY_NAMES[$agent]}"
   ask "DISPLAY_NAME_${upper}" "Display name for $agent" "$default_name" true
   ask "TELEGRAM_BOT_TOKEN_${upper}" "Telegram bot token for $agent" ""
-  session_name="${AGENT_MAP[$agent]}"
-  printf -v "CUSTOM_AGENT_NAME_${upper}" '%s' "$session_name"
+  default_internal_name="${AGENT_MAP[$agent]}"
+  ask "INTERNAL_NAME_${upper}" "Internal OpenClaw agent name for $agent" "$default_internal_name" true
 done
 
 echo ""
@@ -275,10 +275,13 @@ for agent in heisenberg saul walter jesse skyler hank gus twins; do
   upper=$(printf '%s' "$agent" | tr '[:lower:]' '[:upper:]')
   display_var="DISPLAY_NAME_${upper}"
   token_var="TELEGRAM_BOT_TOKEN_${upper}"
+  internal_var="INTERNAL_NAME_${upper}"
   display_value="${!display_var:-${DEFAULT_DISPLAY_NAMES[$agent]}}"
   token_value="${!token_var:-{{TELEGRAM_BOT_TOKEN}}}"
+  internal_value="${!internal_var:-${AGENT_MAP[$agent]}}"
   REPLACEMENTS["{{DISPLAY_NAME_${upper}}}"]="$display_value"
   REPLACEMENTS["{{TELEGRAM_BOT_TOKEN_${upper}}}"]="$token_value"
+  REPLACEMENTS["{{INTERNAL_NAME_${upper}}}"]="$internal_value"
 done
 
 # Count files to process
@@ -332,7 +335,9 @@ INSTALLED=0
 for char_name in "${SELECTED_AGENT_LIST[@]}"; do
   char_name="$(printf "%s" "$char_name" | xargs)"
   [ -z "$char_name" ] && continue
-  agent_name="${AGENT_MAP[$char_name]}"
+  upper=$(printf '%s' "$char_name" | tr '[:lower:]' '[:upper:]')
+  internal_var="INTERNAL_NAME_${upper}"
+  agent_name="${!internal_var:-${AGENT_MAP[$char_name]}}"
   src="$REPO_DIR/agents/$char_name"
   dest="$OPENCLAW_DIR/$agent_name/agent"
 
@@ -415,6 +420,7 @@ echo ""
 echo -e "Next steps:"
 echo -e "  1. Initialize OpenClaw (if first time):  ${BOLD}openclaw init${NC}"
 echo -e "  2. Review generated configs:            ${BOLD}configs/generated/*.openclaw.json${NC}"
+echo -e "     These configs already use your custom internal agent names and rewired session keys.${NC}"
 echo -e "  3. Start the system:                     ${BOLD}openclaw gateway start${NC}"
 echo -e "  4. Check status:                         ${BOLD}openclaw status${NC}"
 echo -e "  5. Send a message to your bot to test!"

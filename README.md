@@ -23,6 +23,7 @@ Release 2 adds better direct-message behavior, durable-memory rules, and updated
 - [Project Structure](#project-structure)
 - [Examples](#examples)
 - [Documentation](#documentation)
+- [Support](#support)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -54,7 +55,7 @@ This is not a framework. This is a **working system** you can clone, configure, 
 ## Why?
 
 - **One boss, seven specialists.** You talk to Heisenberg. He delegates to the right agent. You get results.
-- **34 skills.** PDF generation, research, marketing, security audits, financial tracking, code review — out of the box.
+- **34 skills.** PDF generation, research, marketing, security audits, financial tracking, code review, out of the box.
 - **Board-First protocol.** Tasks survive crashes. File-based state, not memory. No work is lost.
 - **Self-healing.** Health checks, watchdogs, automatic session cleanup. The system monitors itself.
 - **Your data stays yours.** All personal data uses `{{PLACEHOLDER}}` format. Setup wizard fills them in 5 minutes.
@@ -168,6 +169,7 @@ The setup wizard now supports:
 - selected agents only
 - per-agent Telegram bot tokens
 - custom display names
+- custom internal OpenClaw agent names with auto-rewired session keys
 - generated configs in `configs/generated/`
 - a dedicated team directory root
 
@@ -184,7 +186,7 @@ bash scripts/setup.sh --attach-existing --agents heisenberg,walter
 
 See [SETUP.md](SETUP.md) for detailed installation guide or [docs/first-task.md](docs/first-task.md) for your first walkthrough.
 
-> **Language note:** Agent personalities and team protocols are in Russian. The architecture works in any language — edit `SOUL.md` and `AGENTS.md` in each agent to change language.
+> **Language note:** Agent personalities and team protocols are in Russian. The architecture works in any language, edit `SOUL.md` and `AGENTS.md` in each agent to change language.
 
 > **Platform note:** Utility scripts in `scripts/` are optimized for macOS but support Linux/WSL. See [Linux Setup](docs/linux-setup.md) for platform-specific instructions.
 
@@ -231,6 +233,10 @@ bash scripts/deploy-team.sh
 
 ## Documentation
 
+Start with the docs hub, then go deeper where needed:
+
+- [Documentation Hub](docs/README.md) - complete map of guides and reference material
+- [Setup Guide](SETUP.md) - full installation and configuration
 - [Your First Task](docs/first-task.md) - step-by-step walkthrough
 - [Upgrade from Single Agent](docs/upgrade-from-single-agent.md) - migrate from single-agent setup
 - [Supported Providers](SETUP.md#supported-llm-providers) - Anthropic, OpenAI, Google, DeepSeek, Ollama
@@ -240,6 +246,15 @@ bash scripts/deploy-team.sh
 - [Linux Setup](docs/linux-setup.md) - running on Ubuntu/Debian
 - [FAQ](docs/faq.md) - common questions and troubleshooting
 - [Skills Index](skills/README.md) - all 34 skills with dependencies
+
+## Support
+
+Need help with installation, migration, or troubleshooting?
+
+- Read [SUPPORT.md](SUPPORT.md) for the support workflow
+- Check [FAQ](docs/faq.md) for common issues
+- Open a GitHub Issue for bugs or documentation gaps
+- For security problems, use the private process in [SECURITY.md](SECURITY.md)
 
 ## Contributing
 
@@ -257,7 +272,10 @@ bash scripts/deploy-team.sh
 
 ## 🇷🇺 Русская версия
 
-Полная документация на русском: [README.ru.md](README.ru.md)
+Полная документация на русском:
+- [README.ru.md](README.ru.md)
+- [docs/README.ru.md](docs/README.ru.md)
+- [SUPPORT.ru.md](SUPPORT.ru.md)
 
 ---
 

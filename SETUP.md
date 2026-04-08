@@ -64,7 +64,11 @@ Then prepare configs from `configs/*.example` or `configs/generated/`, and merge
 
 ### 4) Custom names
 
-Character branding can stay exactly as-is. The setup wizard now asks for per-agent display names and writes them into generated configs. If you also want the markdown persona files to match perfectly, update `IDENTITY.md` and `SOUL.md` after generation.
+Character branding can stay exactly as-is. The setup wizard now asks for two kinds of names:
+- **display names** - what users see in generated configs
+- **internal OpenClaw agent names** - the real runtime IDs used in `~/.openclaw/agents/...` and `sessions_send`
+
+Generated configs automatically rewire built-in `remoteAgents` session keys to your chosen internal names. If you also want the markdown persona files to match perfectly, update `IDENTITY.md` and `SOUL.md` after generation.
 
 ### 5) Add your own agents
 
