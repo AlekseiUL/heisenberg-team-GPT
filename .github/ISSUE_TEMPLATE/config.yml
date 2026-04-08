@@ -6,3 +6,6 @@ contact_links:
   - name: Support guide
     url: https://github.com/ai-operacionka/heisenberg-team-GPT/blob/main/SUPPORT.md
     about: Check the support workflow before opening an issue.
+  - name: Documentation hub
+    url: https://github.com/ai-operacionka/heisenberg-team-GPT/blob/main/docs/README.md
+    about: Start here if you need setup or architecture guidance.

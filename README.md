@@ -8,6 +8,8 @@ Release 2 adds better direct-message behavior, durable-memory rules, and updated
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![OpenClaw](https://img.shields.io/badge/Built%20with-OpenClaw-blue)](https://github.com/openclaw/openclaw)
+[![Quality Check](https://github.com/ai-operacionka/heisenberg-team-GPT/actions/workflows/check.yml/badge.svg)](https://github.com/ai-operacionka/heisenberg-team-GPT/actions/workflows/check.yml)
+[![Release](https://img.shields.io/github/v/release/ai-operacionka/heisenberg-team-GPT?display_name=tag)](https://github.com/ai-operacionka/heisenberg-team-GPT/releases)
 [![Agents](https://img.shields.io/badge/Agents-8-green)]()
 [![Skills](https://img.shields.io/badge/Skills-34-orange)]()
 
@@ -28,6 +30,7 @@ Release 2 adds better direct-message behavior, durable-memory rules, and updated
 - [Support](#support)
 - [Contributing](#contributing)
 - [Community Health](#community-health)
+- [Release](#release)
 - [License](#license)
 
 ---
@@ -275,8 +278,16 @@ This repository includes a full GitHub contribution flow:
 - [Feature request template](.github/ISSUE_TEMPLATE/feature_request.md)
 - [Documentation template](.github/ISSUE_TEMPLATE/documentation.md)
 - [Pull request template](.github/pull_request_template.md)
+- [CODEOWNERS](.github/CODEOWNERS)
+- [Release config](.github/release.yml)
 - [Security policy](SECURITY.md)
 - [Support guide](SUPPORT.md)
+
+## Release
+
+- Current release notes: [RELEASE.md](RELEASE.md)
+- Changelog: [CHANGELOG.md](CHANGELOG.md)
+- GitHub Releases: `Releases` tab in the repository
 
 ## License
 

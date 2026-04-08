@@ -1,0 +1,24 @@
+changelog:
+  categories:
+    - title: 🚀 Features and improvements
+      labels:
+        - enhancement
+        - feature
+    - title: 🐛 Fixes
+      labels:
+        - bug
+        - fix
+    - title: 📚 Documentation
+      labels:
+        - documentation
+        - docs
+    - title: 🛠 Maintenance
+      labels:
+        - chore
+        - maintenance
+        - ci
+  exclude:
+    labels:
+      - skip-changelog
+    authors:
+      - github-actions[bot]

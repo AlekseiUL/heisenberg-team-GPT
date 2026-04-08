@@ -1,0 +1,19 @@
+# Default owner for the repository
+* @AlekseiUL
+
+# Documentation and community health
+README.md @AlekseiUL
+README.ru.md @AlekseiUL
+SETUP.md @AlekseiUL
+SUPPORT.md @AlekseiUL
+SUPPORT.ru.md @AlekseiUL
+docs/ @AlekseiUL
+.github/ @AlekseiUL
+
+# Core project structure
+agents/ @AlekseiUL
+skills/ @AlekseiUL
+scripts/ @AlekseiUL
+configs/ @AlekseiUL
+references/ @AlekseiUL
+examples/ @AlekseiUL

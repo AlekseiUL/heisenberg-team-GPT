@@ -8,6 +8,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![OpenClaw](https://img.shields.io/badge/Built%20with-OpenClaw-blue)](https://github.com/openclaw/openclaw)
+[![Quality Check](https://github.com/ai-operacionka/heisenberg-team-GPT/actions/workflows/check.yml/badge.svg)](https://github.com/ai-operacionka/heisenberg-team-GPT/actions/workflows/check.yml)
+[![Release](https://img.shields.io/github/v/release/ai-operacionka/heisenberg-team-GPT?display_name=tag)](https://github.com/ai-operacionka/heisenberg-team-GPT/releases)
 [![Agents](https://img.shields.io/badge/Agents-8-green)]()
 [![Skills](https://img.shields.io/badge/Skills-34-orange)]()
 
@@ -28,6 +30,7 @@
 - [Поддержка](#поддержка)
 - [Вклад](#вклад)
 - [GitHub-шаблоны](#github-шаблоны)
+- [Релиз](#релиз)
 - [Лицензия](#лицензия)
 
 ---
@@ -226,8 +229,16 @@ heisenberg-team/
 - [Шаблон feature request](.github/ISSUE_TEMPLATE/feature_request.md)
 - [Шаблон документации](.github/ISSUE_TEMPLATE/documentation.md)
 - [Шаблон pull request](.github/pull_request_template.md)
+- [CODEOWNERS](.github/CODEOWNERS)
+- [Release config](.github/release.yml)
 - [Security policy](SECURITY.md)
 - [Гайд по поддержке](SUPPORT.ru.md)
+
+## Релиз
+
+- Текущие release notes: [RELEASE.md](RELEASE.md)
+- Changelog: [CHANGELOG.md](CHANGELOG.md)
+- GitHub Releases: вкладка `Releases` в репозитории
 
 ## Лицензия
 
