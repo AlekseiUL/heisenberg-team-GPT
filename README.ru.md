@@ -1,5 +1,7 @@
 # 🧪 Heisenberg Team
 
+![Heisenberg Team cover](assets/images/heisenberg-team-cover.png)
+
 > ⚠️ **Перед началом:** Замените `YOUR_USERNAME` на ваш GitHub username в командах клонирования.
 
 **Мультиагентная система из 8 AI-агентов, работающих как команда.** Построена на [OpenClaw](https://github.com/openclaw/openclaw). Вдохновлена Breaking Bad.
@@ -25,6 +27,7 @@
 - [Документация](#документация)
 - [Поддержка](#поддержка)
 - [Вклад](#вклад)
+- [GitHub-шаблоны](#github-шаблоны)
 - [Лицензия](#лицензия)
 
 ---
@@ -214,6 +217,17 @@ heisenberg-team/
 - проверьте [FAQ](docs/faq.md) на частые проблемы
 - заводите GitHub Issue для багов и пробелов в документации
 - для security-вопросов используйте приватный процесс из [SECURITY.md](SECURITY.md)
+
+## GitHub-шаблоны
+
+В репозитории уже лежит полный contribution flow:
+
+- [Шаблон бага](.github/ISSUE_TEMPLATE/bug_report.md)
+- [Шаблон feature request](.github/ISSUE_TEMPLATE/feature_request.md)
+- [Шаблон документации](.github/ISSUE_TEMPLATE/documentation.md)
+- [Шаблон pull request](.github/pull_request_template.md)
+- [Security policy](SECURITY.md)
+- [Гайд по поддержке](SUPPORT.ru.md)
 
 ## Лицензия
 

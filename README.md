@@ -1,5 +1,7 @@
 # 🧪 Heisenberg Team
 
+![Heisenberg Team cover](assets/images/heisenberg-team-cover.png)
+
 **A multi-agent system with 8 AI agents working as a team.** Built on [OpenClaw](https://github.com/openclaw/openclaw). Inspired by Breaking Bad.
 
 Release 2 adds better direct-message behavior, durable-memory rules, and updated OpenClaw operations.
@@ -25,6 +27,7 @@ Release 2 adds better direct-message behavior, durable-memory rules, and updated
 - [Documentation](#documentation)
 - [Support](#support)
 - [Contributing](#contributing)
+- [Community Health](#community-health)
 - [License](#license)
 
 ---
@@ -263,6 +266,17 @@ Need help with installation, migration, or troubleshooting?
 3. Commit changes (`git commit -m 'Add new agent'`)
 4. Push (`git push origin feature/new-agent`)
 5. Open a Pull Request
+
+## Community Health
+
+This repository includes a full GitHub contribution flow:
+
+- [Bug report template](.github/ISSUE_TEMPLATE/bug_report.md)
+- [Feature request template](.github/ISSUE_TEMPLATE/feature_request.md)
+- [Documentation template](.github/ISSUE_TEMPLATE/documentation.md)
+- [Pull request template](.github/pull_request_template.md)
+- [Security policy](SECURITY.md)
+- [Support guide](SUPPORT.md)
 
 ## License
 
