@@ -51,6 +51,14 @@ else
   ERRORS=$((ERRORS + 1))
 fi
 
+if command -v python3 >/dev/null 2>&1; then
+  PYTHON_VER=$(python3 --version 2>/dev/null || echo "python3")
+  echo -e "  ${GREEN}✓${NC} $PYTHON_VER"
+else
+  echo -e "  ${RED}✗${NC} python3 not found. Install Python 3.9+ and re-run the wizard."
+  ERRORS=$((ERRORS + 1))
+fi
+
 if [ "$ERRORS" -gt 0 ]; then
   echo ""
   echo -e "${RED}Fix the issues above and re-run this script.${NC}"
@@ -193,27 +201,33 @@ ask OWNER_TELEGRAM_ID "Your Telegram user ID (digits)"
 ask TELEGRAM_CHANNEL "Your Telegram channel name (without @)"
 ask BOT_USERNAME "Main bot username (e.g. @MyBot_bot)"
 
-declare -A AGENT_MAP=(
-  ["heisenberg"]="main"
-  ["saul"]="producer"
-  ["walter"]="teamlead"
-  ["jesse"]="marketing-funnel"
-  ["skyler"]="skyler"
-  ["hank"]="hank"
-  ["gus"]="kaizen"
-  ["twins"]="researcher"
-)
+agent_internal_name() {
+  case "$1" in
+    heisenberg) echo "main" ;;
+    saul) echo "producer" ;;
+    walter) echo "teamlead" ;;
+    jesse) echo "marketing-funnel" ;;
+    skyler) echo "skyler" ;;
+    hank) echo "hank" ;;
+    gus) echo "kaizen" ;;
+    twins) echo "researcher" ;;
+    *) return 1 ;;
+  esac
+}
 
-declare -A DEFAULT_DISPLAY_NAMES=(
-  ["heisenberg"]="Heisenberg"
-  ["saul"]="Saul"
-  ["walter"]="Walter"
-  ["jesse"]="Jesse"
-  ["skyler"]="Skyler"
-  ["hank"]="Hank"
-  ["gus"]="Gus"
-  ["twins"]="Twins"
-)
+agent_default_display_name() {
+  case "$1" in
+    heisenberg) echo "Heisenberg" ;;
+    saul) echo "Saul" ;;
+    walter) echo "Walter" ;;
+    jesse) echo "Jesse" ;;
+    skyler) echo "Skyler" ;;
+    hank) echo "Hank" ;;
+    gus) echo "Gus" ;;
+    twins) echo "Twins" ;;
+    *) return 1 ;;
+  esac
+}
 
 IFS=',' read -r -a SELECTED_AGENT_LIST <<< "$SELECTED_AGENTS"
 echo ""
@@ -221,16 +235,15 @@ echo -e "${YELLOW}── Per-agent setup ──${NC}"
 for i in "${!SELECTED_AGENT_LIST[@]}"; do
   agent="$(printf '%s' "${SELECTED_AGENT_LIST[$i]}" | xargs)"
   [ -z "$agent" ] && continue
-  if [ -z "${AGENT_MAP[$agent]:-}" ]; then
+  if ! internal_name="$(agent_internal_name "$agent")"; then
     echo -e "  ${YELLOW}⚠${NC} Unknown built-in agent '$agent' - skipped in guided token setup"
     continue
   fi
   upper=$(printf '%s' "$agent" | tr '[:lower:]' '[:upper:]')
-  default_name="${DEFAULT_DISPLAY_NAMES[$agent]}"
+  default_name="$(agent_default_display_name "$agent")"
   ask "DISPLAY_NAME_${upper}" "Display name for $agent" "$default_name" true
   ask "TELEGRAM_BOT_TOKEN_${upper}" "Telegram bot token for $agent" ""
-  default_internal_name="${AGENT_MAP[$agent]}"
-  ask "INTERNAL_NAME_${upper}" "Internal OpenClaw agent name for $agent" "$default_internal_name" true
+  ask "INTERNAL_NAME_${upper}" "Internal OpenClaw agent name for $agent" "$internal_name" true
 done
 
 echo ""
@@ -247,41 +260,50 @@ echo -e "${BOLD}Step 3/5: Applying configuration...${NC}"
 echo ""
 
 # Build replacement pairs
-declare -A REPLACEMENTS=(
-  ["{{OWNER_NAME}}"]="${OWNER_NAME}"
-  ["{{TEAM_NAME}}"]="${TEAM_DISPLAY_NAME}"
-  ["{{OWNER_USERNAME}}"]="${OWNER_USERNAME}"
-  ["{{OWNER_TELEGRAM_ID}}"]="${OWNER_TELEGRAM_ID:-YOUR_TELEGRAM_ID}"
-  ["{{TELEGRAM_CHANNEL}}"]="${TELEGRAM_CHANNEL:-YOUR_CHANNEL}"
-  ["{{BOT_USERNAME}}"]="${BOT_USERNAME:-@YourBot_bot}"
-  ["{{OWNER_SURNAME}}"]="${OWNER_SURNAME:-Surname}"
-  ["{{COUNTRY}}"]="${COUNTRY:-Country}"
-  ["{{CITY}}"]="${CITY:-City}"
-  ["{{GITHUB_ORG}}"]="${GITHUB_ORG:-$OWNER_USERNAME}"
-  ["{{WORKSPACE_PATH}}"]="${WORKSPACE_PATH:-$TEAM_DIRECTORY/}"
-  ["{{PROJECTS_PATH}}"]="${WORKSPACE_PATH:-$TEAM_DIRECTORY/}projects/"
-  ["{{MAIN_MODEL}}"]="${MAIN_MODEL:-anthropic/claude-opus-4-5}"
-  ["{{AGENT_MODEL}}"]="${AGENT_MODEL:-anthropic/claude-sonnet-4-5}"
-  ["{{EMBEDDING_PROVIDER}}"]="${EMBEDDING_PROVIDER:-openai}"
-  ["{{EMBEDDING_MODEL}}"]="${EMBEDDING_MODEL:-text-embedding-3-small}"
-  ["{{ANTHROPIC_API_KEY}}"]="${ANTHROPIC_API_KEY:-your-anthropic-key}"
-  ["{{OPENAI_API_KEY}}"]="${OPENAI_API_KEY:-your-openai-key}"
-  ["{{GOOGLE_API_KEY}}"]="${GOOGLE_API_KEY:-your-google-key}"
-  ["{{DEEPSEEK_API_KEY}}"]="${DEEPSEEK_API_KEY:-your-deepseek-key}"
-)
+REPLACEMENTS_FILE="$(mktemp)"
+trap 'rm -f "$REPLACEMENTS_FILE"' EXIT
 
+add_replacement() {
+  printf '%s\t%s\n' "$1" "$2" >> "$REPLACEMENTS_FILE"
+}
+
+add_replacement "{{OWNER_NAME}}" "${OWNER_NAME}"
+add_replacement "{{TEAM_NAME}}" "${TEAM_DISPLAY_NAME}"
+add_replacement "{{OWNER_USERNAME}}" "${OWNER_USERNAME}"
+add_replacement "{{OWNER_TELEGRAM_ID}}" "${OWNER_TELEGRAM_ID:-YOUR_TELEGRAM_ID}"
+add_replacement "{{TELEGRAM_CHANNEL}}" "${TELEGRAM_CHANNEL:-YOUR_CHANNEL}"
+add_replacement "{{BOT_USERNAME}}" "${BOT_USERNAME:-@YourBot_bot}"
+add_replacement "{{OWNER_SURNAME}}" "${OWNER_SURNAME:-Surname}"
+add_replacement "{{COUNTRY}}" "${COUNTRY:-Country}"
+add_replacement "{{CITY}}" "${CITY:-City}"
+add_replacement "{{GITHUB_ORG}}" "${GITHUB_ORG:-$OWNER_USERNAME}"
+add_replacement "{{WORKSPACE_PATH}}" "${WORKSPACE_PATH:-$TEAM_DIRECTORY/}"
+add_replacement "{{PROJECTS_PATH}}" "${WORKSPACE_PATH:-$TEAM_DIRECTORY/}projects/"
+add_replacement "{{MAIN_MODEL}}" "${MAIN_MODEL:-anthropic/claude-opus-4-5}"
+add_replacement "{{AGENT_MODEL}}" "${AGENT_MODEL:-anthropic/claude-sonnet-4-5}"
+add_replacement "{{EMBEDDING_PROVIDER}}" "${EMBEDDING_PROVIDER:-openai}"
+add_replacement "{{EMBEDDING_MODEL}}" "${EMBEDDING_MODEL:-text-embedding-3-small}"
+add_replacement "{{ANTHROPIC_API_KEY}}" "${ANTHROPIC_API_KEY:-your-anthropic-key}"
+add_replacement "{{OPENAI_API_KEY}}" "${OPENAI_API_KEY:-your-openai-key}"
+add_replacement "{{GOOGLE_API_KEY}}" "${GOOGLE_API_KEY:-your-google-key}"
+add_replacement "{{DEEPSEEK_API_KEY}}" "${DEEPSEEK_API_KEY:-your-deepseek-key}"
 
 for agent in heisenberg saul walter jesse skyler hank gus twins; do
   upper=$(printf '%s' "$agent" | tr '[:lower:]' '[:upper:]')
   display_var="DISPLAY_NAME_${upper}"
   token_var="TELEGRAM_BOT_TOKEN_${upper}"
   internal_var="INTERNAL_NAME_${upper}"
-  display_value="${!display_var:-${DEFAULT_DISPLAY_NAMES[$agent]}}"
-  token_value="${!token_var:-{{TELEGRAM_BOT_TOKEN}}}"
-  internal_value="${!internal_var:-${AGENT_MAP[$agent]}}"
-  REPLACEMENTS["{{DISPLAY_NAME_${upper}}}"]="$display_value"
-  REPLACEMENTS["{{TELEGRAM_BOT_TOKEN_${upper}}}"]="$token_value"
-  REPLACEMENTS["{{INTERNAL_NAME_${upper}}}"]="$internal_value"
+  default_name="$(agent_default_display_name "$agent")"
+  default_internal_name="$(agent_internal_name "$agent")"
+  display_value="${!display_var:-$default_name}"
+  token_value="${!token_var:-}"
+  if [ -z "$token_value" ]; then
+    token_value="{{TELEGRAM_BOT_TOKEN}}"
+  fi
+  internal_value="${!internal_var:-$default_internal_name}"
+  add_replacement "{{DISPLAY_NAME_${upper}}}" "$display_value"
+  add_replacement "{{TELEGRAM_BOT_TOKEN_${upper}}}" "$token_value"
+  add_replacement "{{INTERNAL_NAME_${upper}}}" "$internal_value"
 done
 
 # Count files to process
@@ -295,29 +317,55 @@ echo -e "  Processing $FILE_COUNT files..."
 echo ""
 
 REPLACED_TOTAL=0
+REPLACEMENT_RESULTS_FILE="$(mktemp)"
+trap 'rm -f "$REPLACEMENTS_FILE" "$REPLACEMENT_RESULTS_FILE"' EXIT
 
-for placeholder in "${!REPLACEMENTS[@]}"; do
-  value="${REPLACEMENTS[$placeholder]}"
-  # Escape special chars for sed
-  escaped_value=$(printf '%s\n' "$value" | sed 's/[&/\]/\\&/g')
-  escaped_placeholder=$(printf '%s\n' "$placeholder" | sed 's/[{}]/\\&/g')
+python3 - "$REPO_DIR" "$REPLACEMENTS_FILE" > "$REPLACEMENT_RESULTS_FILE" <<'PY'
+import sys
+from pathlib import Path
 
-  count=$(grep -rl "$placeholder" "$REPO_DIR" --include="*.md" --include="*.sh" --include="*.txt" --include="*.yaml" --include="*.yml" --include="*.json" --include="*.example" --include="*.py" --include="LICENSE" 2>/dev/null | grep -v setup-wizard.sh | grep -v depersonalize.sh | wc -l | tr -d ' ')
+repo_dir = Path(sys.argv[1])
+replacements_file = Path(sys.argv[2])
+allowed_suffixes = {".md", ".sh", ".txt", ".yaml", ".yml", ".json", ".example", ".py"}
+skip_names = {"setup-wizard.sh", "depersonalize.sh"}
 
-  if [ "$count" -gt 0 ]; then
-    find "$REPO_DIR" -type f \( \
-      -name "*.md" -o -name "*.sh" -o -name "*.txt" -o \
-      -name "*.yaml" -o -name "*.yml" -o -name "*.json" -o \
-      -name "*.example" -o -name "*.py" -o -name "LICENSE" \
-    \) ! -path "*/setup-wizard.sh" ! -path "*/depersonalize.sh" ! -path "*/.git/*" \
-    -print0 2>/dev/null | while IFS= read -r -d '' file; do
-      eval "$SED_INPLACE \"s|$escaped_placeholder|$escaped_value|g\" \"$file\"" 2>/dev/null || true
-    done
+replacements = []
+with replacements_file.open("r", encoding="utf-8") as handle:
+    for raw_line in handle:
+        line = raw_line.rstrip("\n")
+        if not line:
+            continue
+        placeholder, value = line.split("\t", 1)
+        replacements.append((placeholder, value))
 
-    echo -e "  ${GREEN}✓${NC} $placeholder → $value ($count files)"
-    REPLACED_TOTAL=$((REPLACED_TOTAL + count))
-  fi
-done
+files = []
+for path in repo_dir.rglob("*"):
+    if not path.is_file():
+        continue
+    if ".git" in path.parts:
+        continue
+    if path.name in skip_names:
+        continue
+    if path.name == "LICENSE" or path.suffix in allowed_suffixes:
+        files.append(path)
+
+for placeholder, value in replacements:
+    touched = 0
+    for path in files:
+        text = path.read_text(encoding="utf-8", errors="ignore")
+        if placeholder not in text:
+            continue
+        path.write_text(text.replace(placeholder, value), encoding="utf-8")
+        touched += 1
+    if touched:
+        print(f"{placeholder}\t{value}\t{touched}")
+PY
+
+while IFS=$'\t' read -r placeholder value count; do
+  [ -n "${placeholder:-}" ] || continue
+  echo -e "  ${GREEN}✓${NC} $placeholder → $value ($count files)"
+  REPLACED_TOTAL=$((REPLACED_TOTAL + count))
+done < "$REPLACEMENT_RESULTS_FILE"
 
 echo ""
 echo -e "  Replaced in $REPLACED_TOTAL file locations."
@@ -387,14 +435,36 @@ echo -e "${BOLD}Step 5/5: Verification...${NC}"
 echo ""
 
 # Check remaining placeholders
-REMAINING=$(grep -rn '{{[A-Z_]*}}' "$REPO_DIR" \
-  --include="*.md" --include="*.sh" --include="*.py" \
-  2>/dev/null \
-  | grep -v setup-wizard.sh \
-  | grep -v depersonalize.sh \
-  | grep -v ".env.example" \
-  | grep -v "quality-check/SKILL.md" \
-  | wc -l | tr -d ' ')
+REMAINING=$(python3 - "$REPO_DIR" <<'PY'
+import re
+import sys
+from pathlib import Path
+
+repo_dir = Path(sys.argv[1])
+pattern = re.compile(r"\{\{[A-Z_]*\}\}")
+allowed_suffixes = {".md", ".sh", ".py"}
+skip_names = {"setup-wizard.sh", "depersonalize.sh", ".env.example"}
+skip_fragments = {"quality-check/SKILL.md"}
+count = 0
+
+for path in repo_dir.rglob("*"):
+    if not path.is_file():
+        continue
+    if ".git" in path.parts:
+        continue
+    if path.name in skip_names:
+        continue
+    rel = path.relative_to(repo_dir).as_posix()
+    if any(fragment in rel for fragment in skip_fragments):
+        continue
+    if path.suffix not in allowed_suffixes:
+        continue
+    text = path.read_text(encoding="utf-8", errors="ignore")
+    count += len(pattern.findall(text))
+
+print(count)
+PY
+)
 
 if [ "$REMAINING" -gt 0 ]; then
   echo -e "  ${YELLOW}⚠${NC} $REMAINING placeholder(s) still unfilled."
@@ -418,11 +488,11 @@ echo "========================================"
 echo -e "${GREEN}${BOLD}Setup complete!${NC}"
 echo ""
 echo -e "Next steps:"
-echo -e "  1. Initialize OpenClaw (if first time):  ${BOLD}openclaw init${NC}"
-echo -e "  2. Review generated configs:            ${BOLD}configs/generated/*.openclaw.json${NC}"
+echo -e "  1. Confirm the CLI is available:         ${BOLD}openclaw --version${NC}"
+echo -e "  2. Review generated configs:             ${BOLD}configs/generated/*.openclaw.json${NC}"
 echo -e "     These configs already use your custom internal agent names and rewired session keys.${NC}"
-echo -e "  3. Start the system:                     ${BOLD}openclaw gateway start${NC}"
-echo -e "  4. Check status:                         ${BOLD}openclaw status${NC}"
+echo -e "  3. Start the system:                      ${BOLD}openclaw gateway start${NC}"
+echo -e "  4. Check status:                          ${BOLD}openclaw status${NC}"
 echo -e "  5. Send a message to your bot to test!"
 echo ""
 echo -e "Guides:"

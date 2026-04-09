@@ -221,7 +221,7 @@ openclaw gateway restart
 ```bash
 npm uninstall -g openclaw
 npm install -g openclaw
-openclaw init
+openclaw --version
 ```
 
 **Риск:** Высокий (потеря данных!)  
@@ -382,8 +382,7 @@ cp ~/.openclaw/openclaw.json.backup ~/.openclaw/openclaw.json
 Или пересоздать:
 ```bash
 mv ~/.openclaw/openclaw.json ~/.openclaw/openclaw.json.broken
-openclaw init
-# Настроить заново
+# Пересобрать конфиг из examples/configs или повторно прогнать setup из репозитория
 ```
 
 **Риск:** Высокий (нужен backup!)  

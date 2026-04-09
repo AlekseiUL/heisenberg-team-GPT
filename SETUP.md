@@ -87,7 +87,7 @@ After the wizard, create the workspace and start:
 
 ```bash
 bash scripts/init-workspace.sh  # Create directories for all agents
-openclaw init                   # First time only — set LLM provider and API key
+openclaw --version              # Confirm the OpenClaw CLI is installed
 openclaw gateway start          # Start the system
 openclaw status                 # Verify all 8 agents are active
 ```
@@ -107,13 +107,13 @@ cp .env.example .env
 # Edit .env with your values
 ```
 
-### Step 2: Initialize OpenClaw
+### Step 2: Confirm OpenClaw is available
 
 ```bash
-openclaw init
+openclaw --version
 ```
 
-Follow the prompts to set your LLM provider, API key, and messaging channel.
+If this command fails, install OpenClaw first. This repository is a team template that sits on top of an existing OpenClaw installation rather than creating the base runtime from scratch.
 
 ### Step 3: Replace Placeholders
 

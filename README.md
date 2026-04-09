@@ -161,10 +161,10 @@ cp .env.example .env
 # 4. Interactive setup (recommended)
 bash scripts/setup-wizard.sh
 
-# 4. Initialize OpenClaw (first time only)
-openclaw init
+# 5. Confirm the OpenClaw CLI is available
+openclaw --version
 
-# 5. Run
+# 6. Run
 openclaw gateway start
 bash scripts/smoke-test.sh
 ```
