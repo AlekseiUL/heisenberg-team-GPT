@@ -30,7 +30,7 @@ This directory contains **committable example OpenClaw configuration files** for
    | `{{TELEGRAM_BOT_TOKEN_HEISENBERG}}` etc. | Bot token for that specific agent |
    | `{{OWNER_TELEGRAM_ID}}` | Your numeric Telegram ID (get it from @userinfobot) |
    | `{{ANTHROPIC_API_KEY}}` | Claude API key (`sk-ant-...`) |
-   | `{{OPENAI_API_KEY}}` | OpenAI API key (`sk-...`) for vector memory embeddings |
+   | `{{OPENAI_API_KEY}}` | OpenAI API key (`sk-...`) for OpenAI models or vector memory embeddings |
 
 3. Verify no placeholders remain:
    ```bash
@@ -53,12 +53,21 @@ This directory contains **committable example OpenClaw configuration files** for
 
 The setup wizard fills per-agent display names, internal agent names, and Telegram bot tokens into the generated copies automatically.
 
+If you choose `Custom endpoint` in the wizard, it also injects a `models.providers.<providerId>` block into `configs/generated/*.openclaw.json` with:
+- custom provider id
+- base URL
+- compatibility mode (`openai-completions` or `anthropic-messages`)
+- model id
+- optional API key
+
+That means generated configs can work with cliproxy, LiteLLM, vLLM, local gateways, and other OpenAI-compatible / Anthropic-compatible endpoints without manual JSON surgery.
+
 ## Design Notes
 
 - **Heisenberg uses Opus** — he's the user-facing boss, quality matters
 - **All others use Sonnet** — sub-agents don't need Opus; saves cost significantly
 - **remoteAgents** — each agent knows about all *other* agents (not itself)
-- **Memory** — all agents use local SQLite with OpenAI embeddings for vector search
+- **Memory** — all agents use local SQLite. Vector search works with embeddings when configured; if you skip embeddings in the wizard, memory falls back to BM25/keyword mode
 - **Heartbeat** — enabled for all agents, 30 min interval
 
 ## Security

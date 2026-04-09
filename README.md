@@ -176,6 +176,7 @@ The setup wizard now supports:
 - per-agent Telegram bot tokens
 - custom display names
 - custom internal OpenClaw agent names with auto-rewired session keys
+- custom OpenAI-compatible / Anthropic-compatible endpoints (cliproxy, LiteLLM, local APIs)
 - generated configs in `configs/generated/`
 - a dedicated team directory root
 

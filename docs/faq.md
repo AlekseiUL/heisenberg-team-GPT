@@ -5,6 +5,21 @@
 ### What LLM providers are supported?
 Any provider supported by OpenClaw: Anthropic (Claude), OpenAI (GPT), Google (Gemini), local models via Ollama, and more.
 
+### Can I use cliproxy, LiteLLM, vLLM, or a local OpenAI-compatible endpoint?
+Yes. Use the `Custom endpoint` option in `scripts/setup-wizard.sh`.
+
+The wizard now asks for:
+- provider id
+- base URL
+- compatibility mode
+- model id
+- optional API key
+
+It injects the matching `models.providers` block into `configs/generated/*.openclaw.json`.
+
+### I only have a custom provider for the main model, not for embeddings. Will the team still start?
+Yes. In the wizard, choose `skip` for embeddings. The team will still start and memory search will fall back to BM25/keyword mode instead of semantic vectors.
+
 ### Do all agents need separate API keys?
 No. All agents share the same OpenClaw configuration and API keys.
 

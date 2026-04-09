@@ -117,7 +117,8 @@ echo "  2) OpenAI (GPT-4, GPT-4o)"
 echo "  3) Google (Gemini)"
 echo "  4) Ollama (local models)"
 echo "  5) DeepSeek"
-echo "  6) Other / I'll configure manually"
+echo "  6) Custom endpoint (OpenAI-compatible / Anthropic-compatible / cliproxy / local API)"
+echo "  7) Other / I'll configure manually later"
 echo ""
 read -p "  Choose [1]: " LLM_CHOICE
 LLM_CHOICE="${LLM_CHOICE:-1}"
@@ -162,6 +163,31 @@ case "$LLM_CHOICE" in
     echo -e "  ${CYAN}Tip: deepseek-reasoner available for complex tasks${NC}"
     ;;
   6)
+    LLM_PROVIDER="custom"
+    ask CUSTOM_PROVIDER_ID "Custom provider ID (e.g. cliproxy)" "custom" true
+    echo ""
+    echo "  Which API compatibility does your endpoint expect?"
+    echo "  1) OpenAI-compatible chat/completions"
+    echo "  2) Anthropic-compatible messages"
+    echo ""
+    read -p "  Choose [1]: " CUSTOM_COMPAT_CHOICE
+    CUSTOM_COMPAT_CHOICE="${CUSTOM_COMPAT_CHOICE:-1}"
+    case "$CUSTOM_COMPAT_CHOICE" in
+      2)
+        CUSTOM_COMPATIBILITY="anthropic-messages"
+        ;;
+      *)
+        CUSTOM_COMPATIBILITY="openai-completions"
+        ;;
+    esac
+    ask CUSTOM_BASE_URL "Custom provider base URL (e.g. http://127.0.0.1:4000/v1)" "" true
+    ask CUSTOM_MODEL_ID "Custom model ID (without provider prefix)" "" true
+    ask CUSTOM_API_KEY "Custom provider API key (optional)"
+    MAIN_MODEL="${CUSTOM_PROVIDER_ID}/${CUSTOM_MODEL_ID}"
+    AGENT_MODEL="${MAIN_MODEL}"
+    echo -e "  ${GREEN}✓${NC} Custom provider configured as ${MAIN_MODEL}"
+    ;;
+  7)
     LLM_PROVIDER="custom"
     ask MAIN_MODEL "Main model (provider/model format)" "anthropic/claude-opus-4-5" true
     AGENT_MODEL="$MAIN_MODEL"
@@ -287,6 +313,11 @@ add_replacement "{{ANTHROPIC_API_KEY}}" "${ANTHROPIC_API_KEY:-your-anthropic-key
 add_replacement "{{OPENAI_API_KEY}}" "${OPENAI_API_KEY:-your-openai-key}"
 add_replacement "{{GOOGLE_API_KEY}}" "${GOOGLE_API_KEY:-your-google-key}"
 add_replacement "{{DEEPSEEK_API_KEY}}" "${DEEPSEEK_API_KEY:-your-deepseek-key}"
+add_replacement "{{CUSTOM_PROVIDER_ID}}" "${CUSTOM_PROVIDER_ID:-custom}"
+add_replacement "{{CUSTOM_BASE_URL}}" "${CUSTOM_BASE_URL:-http://127.0.0.1:4000/v1}"
+add_replacement "{{CUSTOM_MODEL_ID}}" "${CUSTOM_MODEL_ID:-model-name}"
+add_replacement "{{CUSTOM_COMPATIBILITY}}" "${CUSTOM_COMPATIBILITY:-openai-completions}"
+add_replacement "{{CUSTOM_API_KEY}}" "${CUSTOM_API_KEY:-}"
 
 for agent in heisenberg saul walter jesse skyler hank gus twins; do
   upper=$(printf '%s' "$agent" | tr '[:lower:]' '[:upper:]')
@@ -394,7 +425,40 @@ for char_name in "${SELECTED_AGENT_LIST[@]}"; do
     cp "$src"/*.md "$dest/"
     cp "$src"/*.md "$TEAM_ROOT_EXPANDED/$char_name/" 2>/dev/null || true
     if [ -f "$REPO_DIR/configs/$char_name.openclaw.json.example" ]; then
-      cp "$REPO_DIR/configs/$char_name.openclaw.json.example" "$REPO_DIR/configs/generated/$char_name.openclaw.json"
+      generated_path="$REPO_DIR/configs/generated/$char_name.openclaw.json"
+      cp "$REPO_DIR/configs/$char_name.openclaw.json.example" "$generated_path"
+      if [ "$LLM_PROVIDER" = "custom" ] && [ -n "${CUSTOM_PROVIDER_ID:-}" ] && [ -n "${CUSTOM_BASE_URL:-}" ] && [ -n "${CUSTOM_MODEL_ID:-}" ]; then
+        python3 - "$generated_path" "$CUSTOM_PROVIDER_ID" "$CUSTOM_BASE_URL" "$CUSTOM_COMPATIBILITY" "$CUSTOM_API_KEY" "$CUSTOM_MODEL_ID" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+config_path = Path(sys.argv[1])
+provider_id = sys.argv[2]
+base_url = sys.argv[3]
+compatibility = sys.argv[4]
+api_key = sys.argv[5]
+model_id = sys.argv[6]
+
+data = json.loads(config_path.read_text(encoding="utf-8"))
+models = data.setdefault("models", {})
+providers = models.setdefault("providers", {})
+entry = {
+    "baseUrl": base_url,
+    "api": compatibility,
+    "models": [
+        {
+            "id": model_id,
+            "name": model_id,
+        }
+    ],
+}
+if api_key:
+    entry["apiKey"] = api_key
+providers[provider_id] = entry
+config_path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+PY
+      fi
     fi
     echo -e "  ${GREEN}✓${NC} $char_name → $agent_name"
     INSTALLED=$((INSTALLED + 1))
@@ -491,6 +555,9 @@ echo -e "Next steps:"
 echo -e "  1. Confirm the CLI is available:         ${BOLD}openclaw --version${NC}"
 echo -e "  2. Review generated configs:             ${BOLD}configs/generated/*.openclaw.json${NC}"
 echo -e "     These configs already use your custom internal agent names and rewired session keys.${NC}"
+if [ "$LLM_PROVIDER" = "custom" ]; then
+  echo -e "     Custom provider injected:            ${BOLD}${CUSTOM_PROVIDER_ID}/${CUSTOM_MODEL_ID}${NC} -> ${CUSTOM_BASE_URL}"
+fi
 echo -e "  3. Start the system:                      ${BOLD}openclaw gateway start${NC}"
 echo -e "  4. Check status:                          ${BOLD}openclaw status${NC}"
 echo -e "  5. Send a message to your bot to test!"

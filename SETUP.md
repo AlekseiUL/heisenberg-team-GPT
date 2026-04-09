@@ -18,12 +18,25 @@
 | Google | gemini-2.5-pro | gemini-2.5-flash | Full support |
 | DeepSeek | deepseek-chat | deepseek-chat | Budget-friendly. Good reasoning with deepseek-reasoner |
 | Ollama | llama3 (or custom) | same | Local, free. Limited tool-use capability |
+| Custom endpoint | your-provider/your-model | same | OpenAI-compatible or Anthropic-compatible endpoint with custom base URL |
 
 ### Claude Max Users
 If you have a Claude Max subscription ($100-200/month), you don't need a separate API key. The subscription includes API access through the Claude app. Enter 'max' when the wizard asks for your Anthropic API key.
 
 ### Embeddings
 Vector memory search requires OpenAI embeddings ($0.02/1M tokens — practically free). If you skip embeddings, memory search will use keyword matching (BM25) only — still works, just less smart.
+
+### Custom endpoints
+If you use `cliproxy`, LiteLLM, vLLM, a local gateway, or any other OpenAI-compatible / Anthropic-compatible endpoint, choose `Custom endpoint` in the setup wizard.
+
+The wizard will ask for:
+- provider id
+- base URL
+- compatibility mode
+- model id
+- optional API key
+
+It then injects the corresponding `models.providers.<providerId>` block into the generated OpenClaw configs.
 
 ## Quick Start (Recommended)
 
@@ -79,9 +92,10 @@ The wizard will:
 2. Let you choose which built-in agents to install
 3. Ask for your name, team directory, and other settings
 4. Collect per-agent Telegram bot tokens and display names
-5. Generate local configs in `configs/generated/`
-6. Install agents and skills to `~/.openclaw/agents/`
-7. Verify the installation
+5. Collect provider settings, including custom endpoint/base URL when needed
+6. Generate local configs in `configs/generated/`
+7. Install agents and skills to `~/.openclaw/agents/`
+8. Verify the installation
 
 After the wizard, create the workspace and start:
 

@@ -153,10 +153,10 @@ cd heisenberg-team
 
 # 2. Настроить
 cp .env.example .env
-# Отредактируй .env своими значениями
+# Отредактируй .env своими значениями или используй custom endpoint
 
-# 3. Установить
-bash scripts/setup.sh
+# 3. Запустить мастер настройки
+bash scripts/setup-wizard.sh
 
 # 4. Запустить
 openclaw gateway start
@@ -211,6 +211,7 @@ heisenberg-team/
 - [Роли агентов](docs/agent-roles.md)
 - [Установка на Linux](docs/linux-setup.md)
 - [FAQ](docs/faq.md)
+- [Кастомные провайдеры](docs/faq.md#can-i-use-cliproxy-litellm-vllm-or-a-local-openai-compatible-endpoint)
 
 ## Поддержка
 
