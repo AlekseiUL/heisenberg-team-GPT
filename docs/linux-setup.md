@@ -97,8 +97,8 @@ sudo apt-get install -y nodejs
 npm install -g openclaw
 
 # 3. Clone and setup
-git clone https://github.com/YOUR_USERNAME/heisenberg-team.git
-cd heisenberg-team
+git clone https://github.com/AlekseiUL/heisenberg-team-GPT.git
+cd heisenberg-team-GPT
 cp .env.example .env
 # Edit .env with your values
 

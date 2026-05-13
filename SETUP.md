@@ -43,8 +43,8 @@ It then injects the corresponding `models.providers.<providerId>` block into the
 The interactive wizard handles everything - placeholder replacement, agent installation, and verification:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/heisenberg-team.git
-cd heisenberg-team
+git clone https://github.com/AlekseiUL/heisenberg-team-GPT.git
+cd heisenberg-team-GPT
 bash scripts/bootstrap-install.sh   # optional, installs git/node/openclaw stable
 bash scripts/setup-wizard.sh
 ```
@@ -115,8 +115,8 @@ If you prefer manual configuration:
 ### Step 1: Clone and Configure
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/heisenberg-team.git
-cd heisenberg-team
+git clone https://github.com/AlekseiUL/heisenberg-team-GPT.git
+cd heisenberg-team-GPT
 cp .env.example .env
 # Edit .env with your values
 ```

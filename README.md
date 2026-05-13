@@ -2,14 +2,25 @@
 
 ![Heisenberg Team cover](assets/images/heisenberg-team-cover.png)
 
+## Canonical source
+
+This project is maintained by Aleksei Ulianov / Sprut_AI.
+Original repository: https://github.com/AlekseiUL/heisenberg-team-GPT
+
+If you found this project mirrored, repackaged, or redistributed elsewhere, check this repository as the source of truth.
+
+## Attribution
+
+Where permitted by the applicable license, if you reuse, fork, modify, package, or publish this work, keep the original copyright and license notice and link back to the canonical repository.
+
 **A multi-agent system with 8 AI agents working as a team.** Built on [OpenClaw](https://github.com/openclaw/openclaw). Inspired by Breaking Bad.
 
 Release 2 adds better direct-message behavior, durable-memory rules, and updated OpenClaw operations.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![OpenClaw](https://img.shields.io/badge/Built%20with-OpenClaw-blue)](https://github.com/openclaw/openclaw)
-[![Quality Check](https://github.com/ai-operacionka/heisenberg-team-GPT/actions/workflows/check.yml/badge.svg)](https://github.com/ai-operacionka/heisenberg-team-GPT/actions/workflows/check.yml)
-[![Release](https://img.shields.io/github/v/release/ai-operacionka/heisenberg-team-GPT?display_name=tag)](https://github.com/ai-operacionka/heisenberg-team-GPT/releases)
+[![Quality Check](https://github.com/AlekseiUL/heisenberg-team-GPT/actions/workflows/check.yml/badge.svg)](https://github.com/AlekseiUL/heisenberg-team-GPT/actions/workflows/check.yml)
+[![Release](https://img.shields.io/github/v/release/AlekseiUL/heisenberg-team-GPT?display_name=tag)](https://github.com/AlekseiUL/heisenberg-team-GPT/releases)
 [![Agents](https://img.shields.io/badge/Agents-8-green)]()
 [![Skills](https://img.shields.io/badge/Skills-34-orange)]()
 
@@ -148,8 +159,8 @@ graph TB
 
 ```bash
 # 1. Clone
-git clone https://github.com/YOUR_USERNAME/heisenberg-team.git
-cd heisenberg-team
+git clone https://github.com/AlekseiUL/heisenberg-team-GPT.git
+cd heisenberg-team-GPT
 
 # 2. Optional bootstrap installer
 bash scripts/bootstrap-install.sh
@@ -289,6 +300,13 @@ This repository includes a full GitHub contribution flow:
 - Current release notes: [RELEASE.md](RELEASE.md)
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 - GitHub Releases: `Releases` tab in the repository
+
+## Links / Resources
+
+- YouTube: https://youtube.com/@alekseiulianov
+- Telegram channel Sprut AI: https://t.me/Sprut_AI
+- Telegram chat: https://t.me/+eH-qNIDmud8zNDZi
+- AI Операционка: https://t.me/tribute/app?startapp=sJyg
 
 ## License
 

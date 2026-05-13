@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
   - name: Security issue
-    url: https://github.com/ai-operacionka/heisenberg-team-GPT/security/advisories
+    url: https://github.com/AlekseiUL/heisenberg-team-GPT/security/advisories
     about: Report vulnerabilities privately, not in public issues.
   - name: Support guide
-    url: https://github.com/ai-operacionka/heisenberg-team-GPT/blob/main/SUPPORT.md
+    url: https://github.com/AlekseiUL/heisenberg-team-GPT/blob/main/SUPPORT.md
     about: Check the support workflow before opening an issue.
   - name: Documentation hub
-    url: https://github.com/ai-operacionka/heisenberg-team-GPT/blob/main/docs/README.md
+    url: https://github.com/AlekseiUL/heisenberg-team-GPT/blob/main/docs/README.md
     about: Start here if you need setup or architecture guidance.

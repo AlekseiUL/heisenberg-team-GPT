@@ -24,8 +24,8 @@ BEFORE:                          AFTER:
 
 ```bash
 cd ~/Desktop  # or wherever you keep projects
-git clone https://github.com/{{GITHUB_ORG}}/heisenberg-team.git
-cd heisenberg-team
+git clone https://github.com/AlekseiUL/heisenberg-team-GPT.git
+cd heisenberg-team-GPT
 ```
 
 ## Step 2: Run Setup Wizard
