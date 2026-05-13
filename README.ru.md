@@ -76,6 +76,25 @@ Where permitted by the applicable license, if you reuse, fork, modify, package, 
 
 ## Архитектура
 
+### Рабочий цикл
+
+```mermaid
+flowchart LR
+    U[Пользователь / Telegram] --> O[GPT/OpenClaw Orchestrator]
+    O --> S[Shared Board + Durable State]
+    O --> R[Research Agent]
+    O --> C[Code Agent]
+    O --> M[Marketing Agent]
+    O --> Q[Quality / Safety]
+    R --> S
+    C --> S
+    M --> S
+    Q --> S
+    S --> O
+    O --> U
+```
+
+
 ```mermaid
 graph TB
     User["👤 You (Telegram)"]
@@ -137,6 +156,20 @@ graph TB
 | **Hank** | Хэнк Шрейдер | Безопасность/QA | Аудиты, мониторинг |
 | **Gus** | Гус Фринг | Кайдзен | Кроны, самоулучшение |
 | **Twins** | Братья Саламанка | Ресёрч | Глубокий ресёрч |
+
+## Какой Heisenberg repo выбрать?
+
+- [`AlekseiUL/heisenberg-team`](https://github.com/AlekseiUL/heisenberg-team) — основной OpenClaw-шаблон multi-agent команды.
+- `AlekseiUL/heisenberg-team-GPT` — GPT/provider-oriented вариант с расширенным GitHub-оформлением, bilingual docs, release notes, support flow и community-health файлами.
+
+Если нужен самый простой canonical OpenClaw team template — начни с `heisenberg-team`. Если нужен более упакованный GitHub/community-ready вариант — используй этот репозиторий.
+
+## Для кого это
+
+- пользователям OpenClaw, которым нужен публичный polished template с документацией и GitHub hygiene;
+- разработчикам, сравнивающим provider-backed multi-agent setups;
+- тем, кому нужен template, который проще fork-нуть, проверить, локализовать и опубликовать;
+- авторам/комьюнити, которым важны bilingual docs и clean contribution flow.
 
 ## Требования
 

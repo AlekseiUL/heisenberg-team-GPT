@@ -46,6 +46,20 @@ Release 2 adds better direct-message behavior, durable-memory rules, and updated
 
 ---
 
+## Which Heisenberg repo should I use?
+
+- [`AlekseiUL/heisenberg-team`](https://github.com/AlekseiUL/heisenberg-team) — the main OpenClaw multi-agent team template.
+- `AlekseiUL/heisenberg-team-GPT` — the provider/GPT-oriented variant with extended GitHub packaging, bilingual docs, release notes, support flow, and community-health files.
+
+If you want the simplest canonical OpenClaw team, start with `heisenberg-team`. If you want the more packaged GitHub/community-ready variant, use this repository.
+
+## Who is this for?
+
+- OpenClaw users who want a polished public template with docs and GitHub hygiene;
+- builders comparing provider-backed multi-agent setups;
+- people who need a template that is easier to fork, inspect, localize, and publish;
+- educators or community maintainers who want bilingual docs and a cleaner contribution flow.
+
 ## Requirements
 
 - [Node.js](https://nodejs.org/) v18+
@@ -92,6 +106,25 @@ This is not a framework. This is a **working system** you can clone, configure, 
 | Multi-platform | macOS + Linux + WSL | Docker | Python | Python |
 
 ## Architecture
+
+### Operating loop
+
+```mermaid
+flowchart LR
+    U[User / Telegram] --> O[GPT/OpenClaw Orchestrator]
+    O --> S[Shared Board + Durable State]
+    O --> R[Research Agent]
+    O --> C[Code Agent]
+    O --> M[Marketing Agent]
+    O --> Q[Quality / Safety]
+    R --> S
+    C --> S
+    M --> S
+    Q --> S
+    S --> O
+    O --> U
+```
+
 
 ```mermaid
 graph TB
