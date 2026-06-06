@@ -334,6 +334,42 @@ This repository includes a full GitHub contribution flow:
 - Changelog: [CHANGELOG.md](CHANGELOG.md)
 - GitHub Releases: `Releases` tab in the repository
 
+## Русская версия
+
+Heisenberg Team GPT - это production-style template для OpenClaw multi-agent team с bilingual docs, setup wizard и GitHub-ready оформлением.
+
+Репозиторий нужен как пример полноценной агентской команды: роли, board-first coordination, setup flow, docs, community health files и понятная структура для запуска. Это не просто набор prompts, а попытка упаковать multi-agent workflow как проект.
+
+## Что внутри
+
+- template multi-agent team;
+- 8 specialist agents;
+- bilingual documentation;
+- setup wizard;
+- architecture и operating loop;
+- GitHub/community health files;
+- safety и usage notes.
+
+## Для кого
+
+- для людей, которые изучают multi-agent systems;
+- для операторов OpenClaw-style setups;
+- для тех, кто хочет посмотреть, как упаковать agent team в repo;
+- для разработчиков, которым нужен стартовый шаблон, а не пустая папка.
+
+## Что это не делает
+
+Repo не содержит приватных tokens, live runtime state, пользовательских sessions или production secrets. Перед реальным запуском нужно отдельно настроить providers, credentials, routing и safety boundaries.
+
+## Быстрый старт
+
+```bash
+git clone https://github.com/AlekseiUL/heisenberg-team-GPT.git
+cd heisenberg-team-GPT
+```
+
+Дальше используйте setup instructions из английской части README и проверьте локальные credentials отдельно.
+
 ## Links / Resources
 
 - YouTube: https://youtube.com/@alekseiulianov
